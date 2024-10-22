@@ -9,7 +9,7 @@ import plotly.express as px
 
 client = OpenAI(
     base_url="https://api.groq.com/openai/v1",
-    api_key="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"
+    api_key=os.getenv("GROQ_API_KEY")
 )
 
 def explain_prediction(probability, input_dict, surname): 
