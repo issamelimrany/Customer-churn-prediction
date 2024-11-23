@@ -85,22 +85,21 @@ def get_prediction(input_df, input_dict):
     fig_bar.update_layout(title_text='Churn Probability by Model', xaxis_title='Model', yaxis_title='Probability')
     st.plotly_chart(fig_bar, key="bar_chart")
 
-    # Gauge chart for average probability
-    fig_gauge = go.Figure(go.Indicator(
-        mode = "gauge+number",
-        value = avg_probabilities,
-        title = {'text': "Average Churn Probability"},
-        gauge = {'axis': {'range': [0, 1]},
-                 'bar': {'color': "darkblue"},
-                 'steps' : [
-                     {'range': [0, 0.3], 'color': "green"},
-                     {'range': [0.3, 0.7], 'color': "yellow"},
-                     {'range': [0.7, 1], 'color': "red"}],
-                 'threshold': {
-                     'line': {'color': "red", 'width': 4},
-                     'thickness': 0.75,
-                     'value': avg_probabilities}}))
-    st.plotly_chart(fig_gauge, key="gauge_chart")
+    // changing to horizontal barchart
+    fig_bar = go.Figure(go.Bar(
+    x=[avg_probabilities],
+    y=["Average Churn Probability"],
+    text=[f"{avg_probabilities:.2f}"],
+    textposition="auto",
+    marker_color="darkblue",
+    orientation="h"
+))
+fig_bar.update_layout(
+    xaxis=dict(range=[0, 1], title="Probability"),
+    title="Average Churn Probability"
+)
+st.plotly_chart(fig_bar, key="bar_chart")
+
 
     # Radar chart for input features
     features = ['CreditScore', 'Age', 'Tenure', 'Balance', 'NumOfProducts', 'EstimatedSalary']
